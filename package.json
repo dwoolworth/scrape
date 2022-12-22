@@ -1,0 +1,22 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.1275.0",
+    "axios": "^1.2.1",
+    "dotenv": "^16.0.3",
+    "mongoose": "^6.8.0",
+    "path": "^0.12.7",
+    "puppeteer": "^19.4.0",
+    "util": "^0.12.5"
+  },
+  "name": "scrape",
+  "version": "1.0.0",
+  "description": "web scraper",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "dtw",
+  "license": "ISC"
+}
