@@ -1,5 +1,6 @@
-import { getValidatedUrl, getNameValuePairs } from "./getvalidatedurl.js"
+import { getValidatedUrl, getNameValuePairs } from "./index.js"
 import { Url } from '../models/index.js'
+import { warn } from '../utils/index.js'
 
 export const saveAnchorRef = async (anchor, defaultHost) => {
   const ref = getValidatedUrl(anchor, defaultHost)
