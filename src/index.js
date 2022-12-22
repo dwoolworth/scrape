@@ -3,7 +3,9 @@ import { connectDb } from './models/index.js'
 import {
   closeGracefully,
   getAnchorRefs,
-  saveAnchorRef
+  getNextAnchorRef,
+  saveAnchorRef,
+  validateUrlContentType
 } from './lib/index.js'
 import { die, info, warn } from './utils/index.js'
 
@@ -21,15 +23,26 @@ import { die, info, warn } from './utils/index.js'
 
   info('>> connected to database and setup signal handlers')
 
-  // Set starting URL
-  const startingUrl = 'https://lassoedapp.com/'
-
   // Start process
   const browser = await puppeteer.launch()
 
-  // Get top record from database that has status = 'new'
+  while (true) {
+    const refRecord = await getNextAnchorRef()
+    const validType = await validateUrlContentType(refRecord)
+    await refRecord.save()
+    if (!validType) {
+      continue
+    }
+    const page = await browser.newPage();
 
-  // Use axios request
+
+  }
+
+  
+
+  // Set starting URL
+  const startingUrl = 'https://lassoedapp.com/'
+
 
   // Pages
   const pages = await browser.pages();
