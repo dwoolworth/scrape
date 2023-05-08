@@ -1,18 +1,18 @@
-import { warn } from '../utils/index.js'
-
-// Returns valid URL or undefined
-export const getValidatedUrl = (newurl, defaultHost, includeDefaultHost = false) => {
+// Returns valid URL or throws error
+export const getValidatedUrl = ({
+  newurl,
+  defaultHost,
+  includeDefaultHost = false
+}) => {
   try {
     if (!includeDefaultHost) {
-      const url = new URL(newurl)
-      return url
-    } else {
-      const url = new URL(newurl, defaultHost)
-      return url
+      return new URL(newurl)
     }
+    return new URL(newurl, defaultHost)
   } catch (error) {
-    warn(`>> getValidatedUrl error: ${error}`)
-    if (includeDefaultHost) { return undefined }
-    getValidatedUrl(newurl, defaultHost, true)
+    if (includeDefaultHost) {
+      throw new Error(`getValidatedUrl error: ${error}`)
+    }
   }
+  getValidatedUrl(newurl, defaultHost, true)
 }

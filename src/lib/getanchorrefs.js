@@ -1,5 +1,5 @@
 // Returns a distinct list of anchor references or <a> tags in the page
-export const getAnchorRefs = async (page) => {
+export const getAnchorRefs = async ({ page }) => {
   const anchors = await page.$$eval('a', as => as.map(a => a.href))
   const hrefs = anchors.reduce((acc, a) => {
     const regex = /^http.*/

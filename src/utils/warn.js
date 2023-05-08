@@ -1,1 +1,8 @@
-export const warn = (msg) => { console.error('warn:', msg) }
+import config from '../config/index.cjs'
+const { disableWarn } = config
+
+export const warn = (msg) => {
+  if (!disableWarn) {
+    console.error('warn:', msg)
+  }
+}

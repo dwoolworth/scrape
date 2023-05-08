@@ -1,27 +1,29 @@
 import axios from 'axios'
+import { warn } from '../utils/index.js'
+import { setRefRecordStatus } from './setrefrecordstatus.js'
 
-export const validateUrlContentType = async (urlrec) => {
+// Validates a URL's content type
+export const validateUrlContentType = async ({
+  refRecord
+}) => {
   const time = (new Date()).getTime()
-  const options = {}
-  if (urlrec.username || urlrec.password) {
-    options.auth = {
-      username: urlrec.username,
-      password: urlrec.password
+  try {
+    const { headers = [] } = await axios.head(refRecord.fullurl)
+    refRecord.headRequestTime = (new Date()).getTime() - time
+    refRecord.contentType = headers['content-type']
+    if (headers['content-type'] && !headers['content-type'].includes('text/html')) {
+      throw new Error(`invalid url: ${refRecord.fullurl}, content-type: ${headers['content-type']}`)
     }
+  } catch (error) {
+    const { response } = error
+    if (response) {
+      await setRefRecordStatus({ refRecord, status: 'badrequest' })
+      warn(`>> error ${refRecord.fullurl} response: ${response.status || 500}, message: ${error.message}`)
+      throw error
+    }
+    await setRefRecordStatus({ refRecord, status: 'badtype' })
+    warn(`>> error ${refRecord.fullurl} message: ${error.message}`)
+    throw error
   }
-  const {
-    status = 500,
-    headers = []
-  } = await axios.head(urlrec.fullurl, options)
-  urlrec.headRequestTime = (new Date()).getTime() - time
-  if (status !== 200) {
-    urlrec.status = 'badrequest'
-    return false
-  }
-  urlrec.contentType = headers['content-type']
-  if (headers['content-type'] &&
-     !headers['content-type'].includes('text/html')) {
-    return false
-  }
-  return true
+  await setRefRecordStatus({ refRecord, status: 'requested' })
 }
