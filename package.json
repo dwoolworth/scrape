@@ -17,7 +17,8 @@
   "scripts": {
     "start": "node src/index.js",
     "lint": "eslint src",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docker:compose:up": "docker compose up"
   },
   "author": "dtw",
   "license": "ISC",

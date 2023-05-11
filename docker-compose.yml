@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  mongodb:
+    env_file:
+      - .docker-compose.env
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    networks:
+      - scrape-network
+    volumes:
+      - /data/mongodb:/data
+      - /data/mongodb/db:/data/db
+      - /data/configdb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_PASS}
+  memcache:
+    image: memcached
+    ports:
+      - "11211:11211"
+    networks:
+      - scrape-network
+  solr:
+    image: solr
+    ports:
+      - "8393:8393"
+    networks:
+      - scrape-network
+    volumes:
+      - /data/solr:/var/solr
+    command:
+      - solr-precreate
+      - gettingstarted
+  scrape:
+    env_file:
+      - .docker-compose.env
+    build: .
+    cap_add:
+      - SYS_ADMIN
+    depends_on:
+      - mongodb
+      - memcache
+      - solr
+    networks:
+      - scrape-network
+
+networks:
+  scrape-network:
+    driver: bridge
