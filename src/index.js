@@ -1,3 +1,4 @@
+import fs from 'fs'
 import puppeteer from 'puppeteer'
 import { connectDb } from './models/index.js'
 import {
@@ -26,7 +27,13 @@ import {
 
   try {
     while (true) {
-      const browser = await puppeteer.launch()
+      const headless = process.env.HEADLESS || 'new'
+      const browser = await puppeteer.launch({
+        headless,
+        executablePath: fs.existsSync('/usr/bin/google-chrome')
+          ? '/usr/bin/google-chrome'
+          : undefined
+      })
       try {
         await worker({ browser })
       } catch (error) {

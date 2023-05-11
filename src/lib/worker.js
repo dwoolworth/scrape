@@ -1,3 +1,4 @@
+import { warn } from '../utils/index.js'
 import {
   getAnchorRefs,
   getPage,
