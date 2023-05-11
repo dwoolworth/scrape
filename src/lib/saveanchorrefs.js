@@ -1,5 +1,4 @@
 import { getValidatedUrl } from './getvalidatedurl.js'
-import { getNameValuePairs } from './getnamevaluepairs.js'
 import { Url } from '../models/index.js'
 import {
   info,
@@ -19,15 +18,7 @@ const createNewRecs = async ({ anchors, hostname }) => {
       }
       const href = new Url({
         fullurl: ref.href,
-        protocol: ref.protocol,
-        username: ref.username,
-        password: ref.password,
         hostname: ref.hostname,
-        port: ref.port,
-        pathname: ref.pathname,
-        querystring: ref.search,
-        params: getNameValuePairs(ref),
-        hash: ref.hash,
         updated: new Date(),
         created: new Date()
       })

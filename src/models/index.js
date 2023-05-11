@@ -25,6 +25,7 @@ const connectDb = () => {
     useUnifiedTopology: true
   }
   mongoose.set('strictQuery', true)
+  console.error(`Connecting to ${dbConnectionString} with options: ${JSON.stringify(options)}`)
   return mongoose.connect(dbConnectionString, options)
 }
 

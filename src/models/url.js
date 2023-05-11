@@ -8,23 +8,11 @@ const urlSchema = new Schema({
     required: true,
     index: true
   },
-  protocol: String,
-  username: String,
-  password: String,
   hostname: {
     type: String,
     required: true,
     index: true
   },
-  port: Number,
-  pathname: {
-    type: String,
-    required: true,
-    index: true
-  },
-  querystring: String,
-  params: [Object],
-  hash: String,
   status: {
     type: String, // new, head, badrequest, badtype, requested, parsed
     required: true,
@@ -35,7 +23,6 @@ const urlSchema = new Schema({
   contentType: String,
   fullRequestTime: Number,
   anchors: [String],
-  content: String,
   created: Date,
   updated: Date
 })
