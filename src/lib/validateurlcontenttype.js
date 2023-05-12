@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { warn } from '../utils/index.js'
 import { setRefRecordStatus } from './setrefrecordstatus.js'
+import { incrDomainAccessCount } from './domainexclusions.js'
 
 // Validates a URL's content type
 export const validateUrlContentType = async ({
@@ -14,6 +15,8 @@ export const validateUrlContentType = async ({
     if (headers['content-type'] && !headers['content-type'].includes('text/html')) {
       throw new Error(`invalid url: ${refRecord.fullurl}, content-type: ${headers['content-type']}`)
     }
+    await incrDomainAccessCount(refRecord.hostname)
+    await setRefRecordStatus({ refRecord, status: 'requested' })
   } catch (error) {
     const { response } = error
     if (response) {
@@ -25,5 +28,4 @@ export const validateUrlContentType = async ({
     warn(`>> error ${refRecord.fullurl} message: ${error.message}`)
     throw error
   }
-  await setRefRecordStatus({ refRecord, status: 'requested' })
 }

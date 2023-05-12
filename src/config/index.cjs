@@ -1,4 +1,3 @@
-const { inspect } = require('util')
 const path = require('path')
 
 require('dotenv').config({
@@ -16,6 +15,13 @@ module.exports = {
   disableWarn: process.env.DISABLE_WARN || false,
   disableInfo: process.env.DISABLE_INFO || false,
   disableDie: process.env.DISABLE_DIE || false,
+  domainAccessLimit: process.env.DOMAIN_ACCESS_LIMIT || 100,
+  domainLimitTimeout: process.env.DOMAIN_ACCESS_LIMIT || 600,
+  memcachedHost: process.env.MEMCACHED_HOST || 'memcache',
+  memcachedPort: process.env.MEMCACHED_PORT || '11211',
+  memcachedRetries: process.env.MEMCACHED_RETRIES || 10,
+  memcachedRetry: process.env.MEMCACHED_RETRY || 10000,
+  memcachedRemove: process.env.MEMCACHED_REMOVE || true,
   awsAccessKeyId: process.env.AWS_KEY || '',
   awsSecretAccessKey: process.env.AWS_SECRET || '',
   awsRegion: process.env.AWS_REGION || '',
