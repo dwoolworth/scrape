@@ -25,6 +25,10 @@ export const worker = async ({ browser }) => {
     }
     const page = await getPage({ browser, refRecord })
     refRecord.anchors = await getAnchorRefs({ page })
+    refRecord.title = await page.title()
+    refRecord.keywords = await page.$$eval('meta[name="keywords"]', elements => elements.map(element => element.content))
+    refRecord.keywords = refRecord.keywords.split(',').map(keyword => keyword.trim())
+    refRecord.description = await page.$$eval('meta[name="description"]', elements => elements.map(element => element.content))
     //
     // Insert other functions to parse the page
     //

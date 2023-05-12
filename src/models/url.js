@@ -23,6 +23,9 @@ const urlSchema = new Schema({
   contentType: String,
   fullRequestTime: Number,
   anchors: [String],
+  title: String,
+  keywords: [String],
+  description: String,
   created: Date,
   updated: Date
 })
