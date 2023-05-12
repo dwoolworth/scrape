@@ -35,22 +35,22 @@ services:
     networks:
       - scrape-network
     volumes:
-      - dbdata:/var/solr
+      - /var/db/data/solr:/var/solr
     command:
       - solr-precreate
       - gettingstarted
-  scrape:
-    env_file:
-      - .docker-compose.env
-    build: .
-    cap_add:
-      - SYS_ADMIN
-    depends_on:
-      - mongodb
-      - memcache
-      - solr
-    networks:
-      - scrape-network
+#  scrape:
+#    env_file:
+#      - .docker-compose.env
+#    build: .
+#    cap_add:
+#      - SYS_ADMIN
+#    depends_on:
+#      - mongodb
+#      - memcache
+#      - solr
+#    networks:
+#      - scrape-network
 
 volumes:
   dbdata:

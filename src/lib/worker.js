@@ -1,4 +1,8 @@
-import { warn } from '../utils/index.js'
+import {
+  info,
+  debug,
+  warn
+} from '../utils/index.js'
 import {
   getAnchorRefs,
   getPage,
@@ -12,7 +16,9 @@ export const worker = async ({ browser }) => {
   while (true) {
     let refRecord
     try {
+      info('** getting next ref record')
       refRecord = await getValidatedAnchorRef()
+      debug(`++ got next ref record: ${refRecord.fullurl}`)
     } catch (error) {
       warn(`>> failed next ref record: ${error.message}`)
       continue
