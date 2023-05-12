@@ -4,10 +4,11 @@ import {
   cacheIncr,
   cacheSet
 } from './memcache.js'
-import {
+import config from '../config/index.cjs'
+const {
   domainAccessLimit,
   domainLimitTimeout
-} from '../config/index.cjs'
+} = config
 
 export const getDomainExclusions = async () => {
   const domainExclusions = await cacheGet('domainExclusions')

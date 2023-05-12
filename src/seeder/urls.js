@@ -1,5 +1,5 @@
-export default {
-  urls: [{
+export const urls = [
+  {
     fullurl: 'https://finance.yahoo.com/',
     hostname: 'finance.yahoo.com',
     status: 'new',
@@ -41,5 +41,5 @@ export default {
     status: 'new',
     contentType: 'text/html',
     created: new Date()
-  }]
-}
+  }
+]

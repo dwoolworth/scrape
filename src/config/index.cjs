@@ -11,7 +11,6 @@ module.exports = {
   dbuser: process.env.DB_USER || 'loisAdmin',
   dbpass: process.env.DB_PASS || '',
   dbauth: process.env.DB_AUTH || 'authSource=admin',
-  dbrepl: process.env.DB_REPL || 'replicaSet=lois0',
   disableWarn: process.env.DISABLE_WARN || false,
   disableInfo: process.env.DISABLE_INFO || false,
   disableDie: process.env.DISABLE_DIE || false,
@@ -25,5 +24,5 @@ module.exports = {
   awsAccessKeyId: process.env.AWS_KEY || '',
   awsSecretAccessKey: process.env.AWS_SECRET || '',
   awsRegion: process.env.AWS_REGION || '',
-  awsBucket: process.env.AWS_BUCKET || '', dbrepl: process.env.DB_REPL || '',
+  awsBucket: process.env.AWS_BUCKET || ''
 }

@@ -4,6 +4,9 @@ import {
   removeExpiredExclusions,
   getDomainExclusions
 } from './domainexclusions.js'
+import {
+  info
+} from '../utils/index.js'
 
 // Removes any hostname/domain exclusions that have expired,
 // then queries for 'new' URLs, finding one in the list and
@@ -11,6 +14,7 @@ import {
 export const getNextAnchorRef = async () => {
   await removeExpiredExclusions()
   const domainExclusions = await getDomainExclusions() || []
+  info(`** getNextAnchorRef: domainExclusions: ${domainExclusions}`)
   const nextUrl = await Url.findOneAndUpdate(
     {
       status: 'new',
@@ -25,8 +29,10 @@ export const getNextAnchorRef = async () => {
     }
   )
   if (!nextUrl) {
+    info(`** getNextAnchorRef: no nextUrl, using seeder: ${urls}`)
     const index = Math.random() * (urls.length - 1)
     return urls[index]
   }
+  info(`** getNextAnchorRef: nextUrl: ${nextUrl}`)
   return nextUrl
 }

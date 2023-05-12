@@ -1,11 +1,12 @@
 import Memcached from 'memcached'
-import {
+import config from '../config/index.cjs'
+const {
   memcachedHost,
   memcachedPort,
   memcachedRetries,
   memcachedRetry,
   memcachedRemove
-} from '../config/index.cjs'
+} = config
 
 const mc = new Memcached(
     `${memcachedHost}:${memcachedPort}`,
