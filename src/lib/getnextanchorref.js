@@ -6,7 +6,7 @@ import {
 } from './domainexclusions.js'
 import {
   info,
-  debug
+  debg
 } from '../utils/index.js'
 
 // Removes any hostname/domain exclusions that have expired,
@@ -15,7 +15,7 @@ import {
 export const getNextAnchorRef = async () => {
   await removeExpiredExclusions()
   const domainExclusions = await getDomainExclusions() || []
-  debug(`++ getNextAnchorRef: domainExclusions: ${domainExclusions}`)
+  info(`** getNextAnchorRef: domainExclusions: ${JSON.stringify(domainExclusions)}`)
   const nextUrl = await Url.findOneAndUpdate(
     {
       status: 'new',
@@ -30,12 +30,12 @@ export const getNextAnchorRef = async () => {
     }
   )
   if (!nextUrl) {
-    debug(`++ getNextAnchorRef: no nextUrl, using seeder: ${urls}`)
+    debg(`++ getNextAnchorRef: no nextUrl, using seeder: ${urls}`)
     const index = Math.floor(Math.random() * (urls.length - 1))
-    debug(`++ getNextAnchorRef: index: ${index}`)
-    info(`** getNextAnchorRef: url: ${JSON.stringify(urls[index])}`)
+    debg(`++ getNextAnchorRef: index: ${index}`)
+    info(`** getNextAnchorRef: seeder url: ${JSON.stringify(urls[index].fullurl)}`)
     return urls[index]
   }
-  debug(`** getNextAnchorRef: nextUrl: ${nextUrl}`)
+  debg(`++ getNextAnchorRef: nextUrl: ${nextUrl}`)
   return nextUrl
 }

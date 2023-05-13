@@ -6,7 +6,7 @@ import {
 } from './memcache.js'
 import {
   info,
-  debug
+  debg
 } from '../utils/index.js'
 import config from '../config/index.cjs'
 const {
@@ -45,7 +45,7 @@ export const incrDomainAccessCount = async (domain) => {
 // keys as members of the newExclusions object.
 export const removeExpiredExclusions = async () => {
   const domainExclusions = await getDomainExclusions() || []
-  debug(`++ removeExpiredExclusions: domainExclusions: ${domainExclusions.length}`)
+  debg(`++ removeExpiredExclusions: domainExclusions: ${domainExclusions.length}`)
   if (domainExclusions.length === 0) return
   const newExclusions = await cacheGetMany(domainExclusions) || {}
   info(`** removeExpiredExclusions: newExclusions: ${Object.keys(newExclusions).length}`)

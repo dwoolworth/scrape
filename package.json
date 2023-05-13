@@ -7,8 +7,10 @@
     "lodash": "^4.17.21",
     "memcached": "^2.2.2",
     "mongoose": "^6.8.0",
+    "natural": "^6.3.0",
     "path": "^0.12.7",
     "puppeteer": "^19.6.3",
+    "stopwords": "^0.0.9",
     "util": "^0.12.5"
   },
   "name": "scrape",

@@ -1,8 +1,8 @@
 import config from '../config/index.cjs'
 const { disableDebug } = config
 
-export const debug = (msg) => {
+export const debg = (msg) => {
   if (!disableDebug) {
-    console.log('debug:', msg)
+    console.log('debg:', msg)
   }
 }
