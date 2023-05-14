@@ -40,18 +40,18 @@ services:
     command:
       - solr-precreate
       - scrapesolr
-#  scrape:
-#    env_file:
-#      - .docker-compose.env
-#    build: .
-#    cap_add:
-#      - SYS_ADMIN
-#    depends_on:
-#      - mongodb
-#      - memcache
-#      - solr
-#    networks:
-#      - scrape-network
+  scrape:
+    env_file:
+      - .docker-compose.env
+    build: .
+    cap_add:
+      - SYS_ADMIN
+    depends_on:
+      - mongodb
+      - memcache
+      - solr
+    networks:
+      - scrape-network
 
 volumes:
   dbdata:
