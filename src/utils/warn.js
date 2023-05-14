@@ -2,7 +2,7 @@ import config from '../config/index.cjs'
 const { disableWarn } = config
 
 export const warn = (msg) => {
-  if (!disableWarn) {
+  // if (!disableWarn) {
     console.error('warn:', msg)
-  }
+  // }
 }

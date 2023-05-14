@@ -22,6 +22,8 @@ module.exports = {
   memcachedRetries: process.env.MEMCACHED_RETRIES || 10,
   memcachedRetry: process.env.MEMCACHED_RETRY || 10000,
   memcachedRemove: process.env.MEMCACHED_REMOVE || true,
+  solrCollectionName: process.env.SOLR_COLLECTION_NAME || 'scrapesolr',
+  solrAddDocApi: process.env.SOLR_DOC_ADD || 'http://localhost:8983/solr/',
   awsAccessKeyId: process.env.AWS_KEY || '',
   awsSecretAccessKey: process.env.AWS_SECRET || '',
   awsRegion: process.env.AWS_REGION || '',

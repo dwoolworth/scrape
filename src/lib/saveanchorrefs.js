@@ -32,8 +32,8 @@ const createNewRecs = async ({ anchors, hostname }) => {
 }
 
 // save an anchor reference to the database
-export const saveAnchorRefs = async ({ refRecord }) => {
-  const records = await createNewRecs(refRecord)
+export const saveAnchorRefs = async ({ anchors, hostname }) => {
+  const records = await createNewRecs({ anchors, hostname })
   if (!records.length) {
     return
   }

@@ -10,19 +10,7 @@ import {
   saveAnchorRefs,
   setRefRecordStatus
 } from './index.js'
-import natural from 'natural'
-import stopwords from 'stopwords'
-
-const tokenizer = new natural.WordTokenizer()
-const stemmer = natural.PorterStemmer
-const stopw = stopwords.english
-
-const getFilteredTokens = (content) => {
-  const tokens = tokenizer.tokenize(content).map(token => token.replace(/[^\w\s]/g, ''))
-  const filteredTokens = tokens.filter(token => !stopw.includes(token))
-  const stemmedTokens = filteredTokens.map(token => stemmer.stem(token))
-  return stemmedTokens
-}
+import { parsePage } from './parsepage.js'
 
 // Continue to retrieve the next ref record and retrieve and parse for more
 export const worker = async ({ browser }) => {
@@ -37,20 +25,13 @@ export const worker = async ({ browser }) => {
       continue
     }
     const page = await getPage({ browser, refRecord })
-    refRecord.anchors = await getAnchorRefs({ page })
-    await saveAnchorRefs({ refRecord })
+    const anchors = await getAnchorRefs({ page })
+    const result = await parsePage({ refRecord, page })
+    debg(`** parsed page result: ${JSON.stringify(result)}`)
+    await saveAnchorRefs({ anchors, hostname: refRecord.hostname })
     if (refRecord.seeder) {
       continue
     }
-    refRecord.anchors = []
-    const title = await page.title()
-    refRecord.title = getFilteredTokens(title || '')
-    const keywords = await page.$$eval('meta[name="keywords"]', elements => elements.map(element => element.content))
-    refRecord.keywords = getFilteredTokens((keywords || []).join(' '))
-    const description = await page.$$eval('meta[name="description"]', elements => elements.map(element => element.content))
-    refRecord.description = getFilteredTokens((description || []).join(' '))
-    const textContent = await page.$eval('body', element => element.textContent)
-    refRecord.content = getFilteredTokens((textContent || ''))
     await setRefRecordStatus({ refRecord, status: 'parsed' })
   }
 }

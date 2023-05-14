@@ -36,9 +36,10 @@ services:
       - scrape-network
     volumes:
       - /var/db/data/solr:/var/solr
+      - $PWD/scrapesolr:/opt/solr/server/solr/configsets/scrapesolr
     command:
       - solr-precreate
-      - gettingstarted
+      - scrapesolr
 #  scrape:
 #    env_file:
 #      - .docker-compose.env
