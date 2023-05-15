@@ -1,14 +1,12 @@
 # Scrape
-So I originally started this to piece together a skeleton app for scraping data from sites.  However, I got into writing the code for this and decided to go a different route.  Using `NLP` to parse content from sites and single page applications, it just seemed natural to want to add that data into Apache Solr and to work on an algorithm that finds content on the web quickly.
 
-This could be used to scrape content from sites and then work on an algorithm to organize that data into some meaningful structure.
+## Summary
+I originally started this to throw together a skeleton app for scraping data.  After decing to go a different route, I implemented `NLP` to parse content from sites and single page applications, it just seemed natural to want to add that data into Apache Solr and to work on an algorithm that finds content on the web quickly.  This was a bit of a pet project just to see how easily it could be done and launched with `docker compose`.
 
-### TODO: 
-* Figure out a way to seed the database with some sites to start indexing.
-* `npm install natural` and implement tokenization, stemming, and lemmatizing the raw text content, as well as title, keywords, and description meta-tags.
-* Store this resultant info within Apache Solr (create schema for the data that includes the url and any other statistics needed).
-* Implement algorithm that uses memcache to track accesses of a specific domain and limit requests over time to that domain.  Use memcache to store counters and timers for this process.
-* Probably need to figure out a different name.
+Now, this could still be used to scrape content from sites, or to work on an algorithm to organize web data into some meaningful structure.  I know Google can be used for providing search results for one's website.  Possibly, if documentation is behind a paywall or it's all implemented within a SPA, it might be difficult to use Google.
 
-### P.S.
-Yes, I know this is a feeble effort at most of these tasks and that [Nutch](https://nutch.apache.org/) is a much better solution.  I'm trying to try compete with that.  I'm just playing around.
+[Nutch](https://nutch.apache.org/) is a great solution, if you want to deal with the learning curve or need to write a plugin.  Here's some simple free code to toss at that problem as well.
+
+My goal here is to provide a solution you can clone or fork and run `docker compose up` and it'll just work.  However, given the seed files are static, you'll surely want to adjust those.  If you want the crawler to stay on your site, you'll need to modify the code a bit for that.
+
+Otherwise, note that I launch this from a Ubuntu WSL environment, but it should possibly work from Windows as well.  Make sure to configure the volumes correctly in the docker-compose.yml, and be sure to set the dot.env to .env and fix up the configuration settings - as well as the dot.docker-compose.env to .docker-compose.env file.
