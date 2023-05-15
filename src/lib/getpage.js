@@ -1,4 +1,5 @@
 import { die } from '../utils/index.js'
+import { setRefRecordStatus } from './setrefrecordstatus.js'
 
 export const getPage = async ({
   browser,
@@ -13,6 +14,6 @@ export const getPage = async ({
   const time = (new Date()).getTime()
   await page.goto(fullurl, { waitUntil: 'networkidle2' })
   refRecord.fullRequestTime = (new Date()).getTime() - time
-  await refRecord.save()
+  await setRefRecordStatus({ refRecord, status: 'parsed' })
   return page
 }

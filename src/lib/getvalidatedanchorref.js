@@ -2,7 +2,9 @@ import {
   getNextAnchorRef,
   validateUrlContentType
 } from './index.js'
-import { info } from '../utils/index.js'
+import {
+  info
+} from '../utils/index.js'
 
 export const getValidatedAnchorRef = async () => {
   const refRecord = await getNextAnchorRef()

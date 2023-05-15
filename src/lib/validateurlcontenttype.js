@@ -18,6 +18,7 @@ export const validateUrlContentType = async ({
     await incrDomainAccessCount(refRecord.hostname)
     await setRefRecordStatus({ refRecord, status: 'requested' })
   } catch (error) {
+    console.log(error)
     const { response } = error
     if (response) {
       await setRefRecordStatus({ refRecord, status: 'badrequest' })

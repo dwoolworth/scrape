@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 import Url from './url.js'
 import config from '../config/index.cjs'
+import { debg } from '../utils/index.js'
 const {
   dbuser,
   dbpass,
@@ -25,11 +26,12 @@ const connectDb = () => {
     useUnifiedTopology: true
   }
   mongoose.set('strictQuery', true)
-  console.error(`Connecting to ${dbConnectionString} with options: ${JSON.stringify(options)}`)
+  debg(`++ Connecting to ${dbConnectionString} with options: ${JSON.stringify(options)}`)
   return mongoose.connect(dbConnectionString, options)
 }
 
 const closeDb = async () => {
+  debg('++ Closing db connection')
   await mongoose.connection.close()
 }
 

@@ -2,6 +2,7 @@ import { getValidatedUrl } from './getvalidatedurl.js'
 import { Url } from '../models/index.js'
 import {
   info,
+  debg,
   warn
 } from '../utils/index.js'
 
@@ -13,7 +14,7 @@ const createNewRecs = async ({ anchors, hostname }) => {
       const ref = getValidatedUrl({ newurl: h, defaultHost: hostname })
       const foundUrl = await Url.findOne({ fullurl: ref.href })
       if (foundUrl) {
-        warn(`>> found matching url in database: ${ref.href}`)
+        debg(`>> found matching url in database: ${ref.href}`)
         continue
       }
       const href = new Url({
@@ -31,8 +32,8 @@ const createNewRecs = async ({ anchors, hostname }) => {
 }
 
 // save an anchor reference to the database
-export const saveAnchorRefs = async ({ refRecord }) => {
-  const records = await createNewRecs(refRecord)
+export const saveAnchorRefs = async ({ anchors, hostname }) => {
+  const records = await createNewRecs({ anchors, hostname })
   if (!records.length) {
     return
   }

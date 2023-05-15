@@ -16,9 +16,9 @@ services:
     networks:
       - scrape-network
     volumes:
-      - /data/mongodb:/data
-      - /data/mongodb/db:/data/db
-      - /data/configdb
+      - dbdata:/data
+      - dbdata:/data/db
+      - dbdata:/data/configdb
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
       - MONGO_INITDB_ROOT_PASSWORD=${DB_PASS}
@@ -31,14 +31,15 @@ services:
   solr:
     image: solr
     ports:
-      - "8393:8393"
+      - "8983:8983"
     networks:
       - scrape-network
     volumes:
-      - /data/solr:/var/solr
+      - /var/db/data/solr:/var/solr
+      - $PWD/scrapesolr:/opt/solr/server/solr/configsets/scrapesolr
     command:
       - solr-precreate
-      - gettingstarted
+      - scrapesolr
   scrape:
     env_file:
       - .docker-compose.env
@@ -51,6 +52,9 @@ services:
       - solr
     networks:
       - scrape-network
+
+volumes:
+  dbdata:
 
 networks:
   scrape-network:
