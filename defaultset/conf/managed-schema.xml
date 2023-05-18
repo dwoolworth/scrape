@@ -111,23 +111,26 @@
     -->
 
     <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false" />
-     <!-- docValues are enabled by default for long type so we don't need to index the version field  -->
-    <field name="_version_" type="plong" indexed="true" stored="false"/>
+    <!-- docValues are enabled by default for long type so we don't need to index the version field  -->
+    <field name="_version_" type="plong" indexed="false" stored="false" docValues="true"/>
+
     <!-- If you don't use child/nested documents, then you should remove the next two fields:  -->
     <!-- for nested documents (minimal; points to root document) -->
-    <!-- field name="_root_" type="string" indexed="true" stored="false" docValues="false" / -->
+    <field name="_root_" type="string" indexed="true" stored="false" docValues="false" />
     <!-- for nested documents (relationship tracking) -->
-    <!-- field name="_nest_path_" type="_nest_path_" /><fieldType name="_nest_path_" class="solr.NestPathField" / -->
+    <field name="_nest_path_" type="_nest_path_" /><fieldType name="_nest_path_" class="solr.NestPathField" />
+
     <field name="_text_" type="text_general" indexed="true" stored="false" multiValued="true"/>
 
-    <field name="url" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
-    <field name="fqdn" type="string" indexed="true" stored="false" required="true" multiValued="false"/>
-    <field name="title" type="text_general" indexed="true" stored="true" multiValued="false"/>
-    <field name="keywords" type="text_en_splitting" indexed="true" stored="false" multiValued="false"/>
-    <field name="description" type="text_en" indexed="true" stored="true" multiValued="false"/>
-    <field name="content" type="text_en" indexed="true" stored="false" multiValued="false"/>
-    <field name="summary" type="text_ws_limit" indexed="false" stored="true" multiValued="false"/>
-    <copyField source="content" dest="summary"/>
+    <!-- This can be enabled, in case the client does not know what fields may be searched. It isn't enabled by default
+         because it's very expensive to index everything twice. -->
+    <!-- <copyField source="*" dest="_text_"/> -->
+
+    <!-- Dynamic field definitions allow using convention over configuration
+       for fields via the specification of patterns to match field names.
+       EXAMPLE:  name="*_i" will match any field ending in _i (like myid_i, z_i)
+       RESTRICTION: the glob-like pattern in the name attribute must have a "*"
+       only at the start or the end.  -->
 
     <dynamicField name="*_i"   type="pint"     indexed="true"  stored="true"/>
     <dynamicField name="*_is"  type="pints"    indexed="true"  stored="true"/>
@@ -280,14 +283,6 @@
     <!-- A text field that only splits on whitespace for exact matching of words -->
     <dynamicField name="*_ws" type="text_ws"  indexed="true"  stored="true"/>
     <fieldType name="text_ws" class="solr.TextField" positionIncrementGap="100">
-      <analyzer>
-        <tokenizer name="whitespace"/>
-      </analyzer>
-    </fieldType>
-
-    <!-- A text field that only splits on whitespace for limiting to 50 words -->
-    <dynamicField name="*_ws_limit" type="text_ws_limit" indexed="true" stored="true"/>
-    <fieldType name="text_ws_limit" class="solr.TextField" positionIncrementGap="50">
       <analyzer>
         <tokenizer name="whitespace"/>
       </analyzer>
