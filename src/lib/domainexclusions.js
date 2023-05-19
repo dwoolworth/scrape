@@ -15,7 +15,9 @@ const {
 } = config
 
 export const getDomainExclusions = async () => {
+  debg('++ calling cacheGet')
   const domainExclusions = await cacheGet('domainExclusions') || '[]'
+  debg(`++ getDomainExclusions: domainExclusions: ${domainExclusions}`)
   return JSON.parse(domainExclusions)
 }
 
@@ -44,6 +46,7 @@ export const incrDomainAccessCount = async (domain) => {
 // in an array, which is passed to cacheGetMany() which returns a list of
 // keys as members of the newExclusions object.
 export const removeExpiredExclusions = async () => {
+  debg('++ calling getDomainExclusions')
   const domainExclusions = await getDomainExclusions() || []
   debg(`++ removeExpiredExclusions: domainExclusions: ${domainExclusions.length}`)
   if (domainExclusions.length === 0) return

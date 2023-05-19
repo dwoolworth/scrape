@@ -10,6 +10,7 @@ import {
   info,
   warn
 } from './utils/index.js'
+import config from './config/index.cjs'
 
 (async () => {
   // Connect to the database
@@ -22,6 +23,8 @@ import {
   // Setup shutdown signals
   process.on('SIGINT', closeGracefully)
   process.on('SIGTERM', closeGracefully)
+
+  console.error(`>> config: ${JSON.stringify(config, null, 2)}`)
 
   info('** connected to database and setup signal handlers')
 

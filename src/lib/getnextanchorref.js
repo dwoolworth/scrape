@@ -13,7 +13,9 @@ import {
 // then queries for 'new' URLs, finding one in the list and
 // updating it to status 'head', then returning it.
 export const getNextAnchorRef = async () => {
+  debg('++ calling removeExpiredExclusions')
   await removeExpiredExclusions()
+  debg('++ calling getDomainExclusions')
   const domainExclusions = await getDomainExclusions() || []
   info(`** getNextAnchorRef: domainExclusions: ${JSON.stringify(domainExclusions)}`)
   const nextUrl = await Url.findOneAndUpdate(

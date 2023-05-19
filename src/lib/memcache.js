@@ -33,6 +33,7 @@ export const cacheIncr = async (key, amount) => new Promise((resolve) => {
 })
 
 export const cacheGet = async key => new Promise((resolve, reject) => {
+  debg(`++ cacheGet: ${key}`)
   mc.get(key, (err, data) => {
     if (err) {
       warn(`>> cacheGet: ${err}`)
